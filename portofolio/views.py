@@ -11,6 +11,13 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+def home(request):
+    template = loader.get_template("home/index.html")
+    context = {
+        "title" : "Home Page"
+    }
+    return HttpResponse(template.render(context, request))
+
 def about(request):
     template = loader.get_template("about/index.html")
     context = {
