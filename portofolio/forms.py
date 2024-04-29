@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Tag
+from .models import Project, Tag, Contact
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 class ProjectForm(forms.ModelForm):
@@ -24,3 +24,48 @@ class TagForm(forms.ModelForm):
     class Meta:
         models = Tag
         fields = "__all__"
+
+
+class ContactForm(forms.ModelForm):
+   
+   class Meta:
+       model = Contact
+       fields = ('full_name', 'email', 'subject', 'message')
+
+       widgets = {
+           'full_name': forms.TextInput(
+               attrs={
+                   'class': 'form-control',
+                   'required': True,
+                   'autocomplete': 'off',
+                   'placeholder': 'Masukkan nama lengkap'
+               }
+           ),
+            'email': forms.TextInput(
+               attrs={
+                   'class': 'form-control',
+                   'type': 'email',
+                   'required': True,
+                   'autocomplete': 'off',
+                   'placeholder': 'Masukkan alamat email'
+               }
+           ),
+            'subject': forms.Textarea(
+               attrs={
+                   'class': 'form-control',
+                   'required': True,
+                   'autocomplete': 'off',
+                   'placeholder': 'Masukkan subjek anda',
+                   'rows': 2
+               }
+           ),
+            'message': forms.Textarea(
+               attrs={
+                   'class': 'form-control',
+                   'required': True,
+                   'autocomplete': 'off',
+                   'placeholder': 'Masukkan pesan anda',
+                   'rows': 4
+               }
+           ),
+       }

@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from mimetypes import guess_type
+from django.utils import timezone
 
 # Create your models here.
 class Tag(models.Model):
@@ -23,6 +24,16 @@ class Gallery(models.Model):
             return "image"
         elif(type_tuple[0]).__contains__("video"):
             return "video"
-    
+        
+class Contact(models.Model):
+    full_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=255, default='')
+    subject = models.CharField(max_length=400)
+    message = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now())
+
+class Subscriber(models.Model):
+    email = models.CharField(max_length=255, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     

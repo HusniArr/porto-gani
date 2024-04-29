@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import Project, Gallery
+from .models import Project, Gallery, Contact
+from .forms import ContactForm
+from django.shortcuts import redirect, render
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -51,13 +54,26 @@ def project(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 def contact(request):
-    template = loader.get_template("contact/index.html")
-    galleries = Gallery.objects.all()
-    context = {
-        "title" : "Contact Page",
-        "galleries": galleries
-    }
-    return HttpResponse(template.render(context, request))
 
-
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            
+            full_name = request.POST.get('full_name')
+            email = request.POST.get('email')
+            subject = request.POST.get('subject')
+            message = request.POST.get('message')
+        
+            contact = Contact.objects.create(
+                full_name = full_name,
+                email = email,
+                subject = subject,
+                message = message
+            )
+            contact.save()
+            return redirect('/contact')
+    else:
+        form = ContactForm()
+        return render(request, 'contact/index.html', {'form': form, 'title':  'Contact Page'})
