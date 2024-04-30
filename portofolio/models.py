@@ -30,7 +30,7 @@ class Contact(models.Model):
     email = models.CharField(max_length=255, default='')
     subject = models.CharField(max_length=400)
     message = models.TextField()
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
 
 class Subscriber(models.Model):
     email = models.CharField(max_length=255, default='')
